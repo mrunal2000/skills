@@ -1,4 +1,0 @@
-interface:
-  display_name: "Why It Feels Good"
-  short_description: "Decode UI craft through code, docs, and interaction"
-  default_prompt: "Use $why-it-feels-good to investigate this component or library and explain its strengths and weaknesses in plain language and technical terms."
