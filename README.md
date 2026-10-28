@@ -36,11 +36,11 @@ Look at its shared systems and a few representative components.
 
 - **Verdict:** the central strength or weakness in one sentence.
 - **Why it feels good:** short, plain-language findings.
-- **Technical takeaways:** a table of reusable decisions, implementation details, and verified animation values or props, with source links.
+- **Technical takeaways:** a concise table of reusable decisions, implementation details, and verified animation values or props for the active configuration, with source links.
 - **Where it falls short:** meaningful criticism and tradeoffs, when supported.
 - **Checked:** what the agent inspected, tried, and could not verify.
 
-The explanation separates documented intent, code-supported mechanisms, observed behavior, and interpretation. It does not assume every design choice deserves praise.
+The explanation separates documented intent, code-supported mechanisms, observed behavior, and interpretation. Without a known demo configuration, it reports clearly labeled defaults. Other variants appear only when they change the explanation. It does not assume every design choice deserves praise.
 
 ## Does it need computer use?
 

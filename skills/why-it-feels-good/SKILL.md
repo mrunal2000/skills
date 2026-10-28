@@ -16,15 +16,21 @@ Use three complementary sources: documentation for stated intent, code for mecha
 - Try the actual interface when tools and a runnable example are available. Prefer an existing demo or local app. If necessary, create a minimal isolated playground without modifying the user's application. Retrieve package contents without executing installation scripts when that is sufficient for reading code. Installing a library, overwriting app files, or installing its companion skill is not automatically necessary because its docs suggest it.
 - If a source or runnable interface is inaccessible, state the specific limit and continue with available evidence. Do not describe a docs-only answer as code analysis, or screenshots as evidence of timing, responsiveness, or interruption behavior.
 
-Use available browser or computer interaction tools without an extra confirmation when they materially improve the requested analysis and the actions are already authorized. Computer use is one way to inspect behavior, not a prerequisite for every analysis. If interaction requires the user to enable an available capability, explain the specific behavior you want to verify and ask once whether they want to enable it. Do not invent an enablement option for agents that lack one. Continue independent code-and-docs analysis while waiting; do not treat silence as permission. If interaction is unavailable or declined, complete the analysis with that limitation stated. Static components may need visual inspection more than interaction; gesture-driven controls benefit substantially from hands-on testing.
+Use available interaction tools within the authorized analysis without asking again. Computer use is helpful, not required: static components may need visual inspection more than interaction. If enabling an available capability would help, explain what you want to verify and ask once. Continue independent code-and-docs work while waiting; silence is not permission. Do not invent an enablement option. If interaction is unavailable or declined, finish with that limit stated.
 
 The sequence can vary. Form an initial observation from the interface when practical, then use docs and code to test it. Do not let the author's vocabulary become the entire explanation.
+
+For behavior attributed to code, trace the active path from call-site props through shared tokens and relevant CSS overrides, platform branches, and motion preferences. A default constant may not describe the demonstrated setup. If the active setup cannot be established, label the analyzed defaults or configuration as such; do not imply they were observed.
+
+For code-only analysis, introduce the verdict as an interpretation of the implementation. Reserve “I observed” and “I tried” for actual interaction. State a material limitation once near the affected conclusion, then use natural language rather than repeating a disclaimer in every finding.
 
 ## Choose the scope
 
 For one component, follow its important state changes and the code that owns them. Include the surrounding system only where it explains the behavior.
 
-For a library, inspect shared foundations and a small, varied sample of components. Choose examples that exercise different behaviors, such as targeting, selection, direct manipulation, and overlays or state transitions. Look for where shared rules are applied and where exceptions occur. Report which components you sampled; do not imply an exhaustive audit. Expand the sample when contradictions would materially change your conclusion.
+For a library, inspect shared foundations and a small, varied sample of components. Choose examples that exercise different behaviors, such as targeting, selection, direct manipulation, and overlays or state transitions. Look for where shared rules are applied and where exceptions occur. Report which components you sampled; do not imply an exhaustive audit.
+
+Stop when the selected findings have enough evidence to explain the behavior, mechanism, and meaningful limits. Expand investigation or sampling only to resolve a contradiction or uncertainty that could change the conclusion. Do not keep collecting components, props, or animation tokens merely because they exist.
 
 ## Investigate the feel
 
@@ -32,7 +38,7 @@ Follow meaningful moments: approaching a target, pressing, changing a selection,
 
 For dynamic data, use repeatable inputs when possible: steady change, sudden jumps, reversals, gaps, and bursts. For controls, try rapid reversal or repeated input, and keyboard or touch behavior where relevant and available. Observe what changes, what stays stable, how feedback is sequenced, and whether the visual target matches the actual action.
 
-Read beyond animation constants. Trace state ownership, event handlers, hit testing, layout and measurement, identity across renders, typography, layering, rendering paths, and cancellation where they explain an observed effect. A spring token alone does not prove interruption works; a canvas alone does not prove good performance; an accessible primitive alone does not prove the final component is accessible.
+Trace the state, events, targeting, layout, typography, rendering, or cancellation that explain the effect. A spring token alone does not prove interruption works; a canvas does not prove performance; an accessible primitive does not prove the final component is accessible.
 
 For each strong finding, connect:
 
@@ -44,27 +50,35 @@ Consider visual hierarchy, spacing, typography, affordances, feedback, stability
 
 ## Exercise judgment
 
-Criticize anything that deserves it. Explain the concrete cost, the context in which it matters, and the evidence behind the concern. Examples include feedback that trails input, movement that obscures information, ambiguous click regions, excessive emphasis, inconsistent component behavior, or reduced-motion handling that leaves distracting movement intact.
+Criticize anything that deserves it. Explain the cost, context, and evidence: for example, lagging feedback, obscured information, ambiguous targets, excessive emphasis, inconsistent behavior, or distracting movement under reduced-motion settings.
 
-Separate a verified defect from a tradeoff, personal preference, or untested concern. There is no quota for praise or criticism. Do not invent weaknesses for balance, or call something universally good because it is expressive. Consider repeated use and the task's stakes as well as first-impression delight. Avoid performance and accessibility verdicts unsupported by inspection or testing.
+Distinguish verified defects, tradeoffs, personal preferences, and untested concerns. Do not invent weaknesses for balance or equate expressiveness with universal quality. Consider repeated use and task stakes alongside first impressions. Support performance and accessibility verdicts with inspection or testing.
 
 When docs and code disagree, explain the discrepancy and base implementation claims on the inspected version. Code comments about calibration or measured performance are not measurements you have reproduced. Interpret psychological effects as reasoned judgments unless supported by relevant evidence from people.
 
 ## Write the explanation
 
-Make the answer easy to scan. Investigate deeply, but summarize selectively. Default to roughly 250–450 words, fewer for a simple component. Expand only when the user asks for depth or a material finding needs it. For a library, synthesize the strongest shared patterns instead of giving every sampled component its own report.
+Investigate deeply, but summarize selectively. Default to roughly 250–450 words, fewer for a simple component. Expand when the user requests depth or a material finding needs it. For a library, synthesize shared patterns rather than giving every sampled component its own report.
 
-Use this compact format, keeping qualitative and technical findings in separate sections:
+Keep qualitative and technical findings separate:
 
-1. **Verdict:** One sentence naming the central quality or weakness of this particular example. Avoid generic praise.
-2. **Why it feels good:** Usually 2–4 short bullets in everyday language. Give each a brief, concrete label and one or two sentences describing a recognizable moment and its likely effect. No function names, CSS properties, spring constants, or implementation digressions here. Adapt the heading when the experience is mixed or poor.
-3. **Technical takeaways:** Turn the implementation into explicit, reusable lessons. Present a Markdown table with exactly three columns: **Takeaway**, **How it works**, and **Values / props**. Use one row per reusable lesson. The Takeaway cell names a concrete design or engineering decision that makes sense on its own, such as “Animate the surface independently of the label.” The How it works cell briefly explains the mechanism and its practical consequence, with a source link. Keep cells concise; do not put paragraph-length explanations or nested lists inside them. Keep the order aligned with the qualitative findings where useful, but do not reuse their emotional labels. Link to the relevant source. Include the exact animation values and props behind each technical finding when available: durations and delays with units, easing curves, spring configuration, animated properties and their start/end values, transforms, distances, opacity, and interaction or motion props that enable or tune the behavior. Name the actual identifiers using inline code. Put these in the Values / props cell, separated with semicolons and labeled by state where needed. Use “Not applicable” when the mechanism has no relevant animation values or props; use “Not verified” for unknown values rather than inventing them. Explain what the important values control. Distinguish defaults from demo overrides, entry from exit, and configured duration from measured settling time. If a value comes from a shared token, resolve it to its definition and include both the token name and value. Report only values verified in code or clearly attributed to docs; say when a value could not be determined instead of guessing. Include relevant animation values even when they are not the main lesson, but do not dump unrelated API props.
-4. **Where it falls short:** Include only meaningful criticism, usually 1–2 concise bullets. Identify the concrete cost and context, distinguishing observed defects from tradeoffs or untested concerns. Omit this section if there is nothing substantiated to add; do not manufacture balance.
-5. **Checked:** One compact evidence line stating what you read and tried, the sampled components for a library, and any material limitation. Do not bury a limitation that undermines the verdict; mention that earlier too.
+1. **Verdict:** One sentence naming the central quality or weakness. Frame it as an interpretation when runtime behavior has not been observed.
+2. **Why it feels good:** Usually 2–4 short bullets in everyday language. Describe a recognizable moment and its likely effect, without function names or animation constants. Adapt the heading for mixed or poor experiences.
+3. **Technical takeaways:** A Markdown table with exactly **Takeaway**, **How it works**, and **Values / props**. Default to 3–5 strong lessons, fewer for simple components. Follow the table rules below.
+4. **Where it falls short:** Only meaningful criticism, usually 1–2 concise bullets. Explain the concrete cost and context; distinguish observed defects from tradeoffs or untested concerns. Omit if there is nothing substantiated to add.
+5. **Checked:** One compact line naming the evidence, sampled components for a library, analyzed configuration, and material limits. A limitation that undermines the verdict also belongs near that verdict.
 
-The qualitative section explains the experience; the technical section teaches the decisions that produce it. A reader scanning only the Takeaway column should learn something they could apply elsewhere. Keep each technical row focused on one lesson: do not bury unrelated spacing, timing, or documentation discrepancies inside a hover finding. Select the strongest lessons instead of cataloging every implementation detail. Preserve conditions and exceptions so a context-specific technique does not become a universal rule. Use descriptive source links within the How it works cells rather than a separate bibliography. Explain unfamiliar technical terms briefly. Do not add scores, exhaustive inventories, a recap, an implementation plan, or a repeated closing lesson by default.
+### Technical table
 
-Example format, using illustrative values that must be verified for the actual subject:
+- **Takeaway:** Name one reusable design or engineering decision that makes sense on its own. “Animate the surface independently of the label” teaches more than “A deliberate press.” Keep roughly the same order as the qualitative findings, without repeating their wording.
+- **How it works:** Briefly explain the actual mechanism and consequence, with a descriptive source link. Preserve relevant conditions so a local technique does not become a universal rule. Explain unfamiliar terms briefly.
+- **Values / props:** Give the verified settings behind that lesson: relevant animated properties and endpoints, durations and delays with units, easing or spring parameters, distances, opacity, and controlling props. Use actual identifiers in inline code, short state labels, and semicolons. Static findings may instead include spacing, type, layout, or other relevant settings; do not force an animation explanation.
+- Analyze the **active configuration** shown or specified. With no demo or known active setup, report clearly labeled defaults. Include another size, theme, or variant only when it materially changes the explanation or the user asks for comparison. Do not enumerate every variant by default.
+- Resolve shared tokens and report both the token name and values **actually consumed by this behavior**. Check call-site overrides before quoting defaults. Exclude unused transitions or token fields, such as an exit preset that the component never applies.
+- Distinguish entry from exit, configured duration from measured settling time, and values verified in code from values only documented. Use “Not verified” for an unknown value and “Not applicable” when the lesson has no relevant values or props. Do not guess.
+- Keep each row focused on one lesson and each cell compact. Include exact relevant values for the selected mechanism, but avoid an inventory of incidental coordinates or unrelated props. If a mechanism has a long state map, show the states needed to understand it and link to the full definition. Do not squeeze all findings into the table or repeat the same configuration across rows.
+
+Example format, with illustrative values that must be verified for the actual subject:
 
 **Why it feels good**
 
@@ -74,11 +88,9 @@ Example format, using illustrative values that must be verified for the actual s
 
 | Takeaway | How it works | Values / props |
 |---|---|---|
-| **Animate the surface independently of the content.** | Contract a separate background layer while keeping text and the hit area fixed. [Source](verified-source-link) | Animated property: `box-shadow`; contraction: `1px` per edge |
-| **Press quickly, release gently.** | Separate timings give immediate feedback and a softer return. [Source](verified-source-link) | Press: `80ms`; release: `180ms` |
+| **Animate the surface independently of the content.** | Contract a separate background layer, leaving text and the hit area fixed. [Source](verified-source-link) | `box-shadow`; contraction: `1px` per edge |
+| **Press quickly, release gently.** | Separate timings give prompt feedback and a softer return. [Source](verified-source-link) | Press: `80ms`; release: `180ms` |
 
-Avoid a Takeaway cell such as “A small, deliberate press” followed by a dense inventory of implementation details. Name the reusable technical decision instead. Keep distinct lessons in separate rows. These example mechanisms and values are not rules to impose on every component.
+These example mechanisms and values are not rules to impose on other components. Replace vague praise such as polished, delightful, intuitive, or smooth with what actually happens. Do not add scores, exhaustive inventories, a recap, an implementation plan, or a repeated closing lesson by default.
 
-Use plain language that distinguishes interpretation from observation without repeating a disclaimer after every bullet. Replace adjectives such as polished, delightful, intuitive, or smooth with what actually happens. The output should explain the experience, not merely list features.
-
-Before responding, check that you actually read code, attempted interaction when feasible, and kept documented intent, inspected mechanics, observed behavior, and your interpretation distinct. If one is missing, disclose it plainly. Do not claim to know why every user will feel the same way.
+Before responding, verify that you read relevant code **or describe the concrete attempt and why access failed**; attempted interaction when feasible; traced reported values to the analyzed configuration; and kept documented intent, inspected mechanics, observed behavior, and interpretation distinct. Do not claim to know why every user will feel the same way.
