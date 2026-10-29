@@ -1,4 +1,4 @@
-# Why it feels good
+# Decode Craft
 
 An agent skill for understanding the craft behind a UI component, interaction, or entire library.
 
@@ -7,10 +7,10 @@ It reads available docs, traces the implementation, and tries the interaction wh
 ## Install
 
 ```bash
-npx skills add mrunal2000/skills --skill why-it-feels-good
+npx skills add mrunal2000/skills --skill decode-craft
 ```
 
-Choose your agent when prompted. For manual installation, copy the [`why-it-feels-good`](skills/why-it-feels-good) folder into your agent’s skills directory.
+Choose your agent when prompted. For manual installation, copy the [`decode-craft`](skills/decode-craft) folder into your agent’s skills directory.
 
 The skill is agent agnostic: one `SKILL.md`, with no scripts, dependencies, or vendor-specific metadata. Your agent needs to support skills or load the instructions directly.
 
@@ -19,16 +19,16 @@ The skill is agent agnostic: one `SKILL.md`, with no scripts, dependencies, or v
 Give your agent a demo URL, repository, package name, or local component:
 
 ```text
-Use the why-it-feels-good skill to analyze https://benji.org/liveline
+Use the decode-craft skill to analyze https://benji.org/liveline
 ```
 
 ```text
-Use the why-it-feels-good skill to explain why this button feels good.
+Use the decode-craft skill to explain why this button feels good.
 Read src/components/button.tsx and try it in the running app.
 ```
 
 ```text
-Use the why-it-feels-good skill to analyze this component library.
+Use the decode-craft skill to analyze this component library.
 Look at its shared systems and a few representative components.
 ```
 
@@ -48,4 +48,4 @@ No. Browser or computer interaction helps verify timing, gestures, and interrupt
 
 ## Read or improve the skill
 
-The full instructions are in [`skills/why-it-feels-good/SKILL.md`](skills/why-it-feels-good/SKILL.md). Suggestions and examples of unhelpful output are welcome in [issues](https://github.com/mrunal2000/skills/issues).
+The full instructions are in [`skills/decode-craft/SKILL.md`](skills/decode-craft/SKILL.md). Suggestions and examples of unhelpful output are welcome in [issues](https://github.com/mrunal2000/skills/issues).

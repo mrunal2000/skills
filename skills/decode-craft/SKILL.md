@@ -1,9 +1,9 @@
 ---
-name: why-it-feels-good
+name: decode-craft
 description: Deconstruct why a UI component, interaction, or component library feels good or falls short by reading its code, consulting available docs, and trying it when possible. Explain the experience in plain language and connect it to concrete implementation decisions. Use for design craft analysis, not routine implementation or a generic code review.
 ---
 
-# Why it feels good
+# Decode Craft
 
 Help someone notice, understand, and reuse the decisions behind an interface's feel. Explain both what the person experiences and how the implementation produces it. Treat praise as a hypothesis to investigate, not the assignment's required conclusion. A component and an entire library are both valid subjects.
 
